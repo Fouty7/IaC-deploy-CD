@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  aws-cli: circleci/aws-cli@2.0.3
 jobs:
   create_infrastructure: 
         docker:
@@ -10,7 +12,7 @@ jobs:
               command: |
                 aws cloudformation deploy \
                   --template-file serverInfra.yml \
-                  --stack-name InfraDeployment-${CIRCLE_WORKFLOW_ID:0:5} \
+                  --stack-name infra-stack-${CIRCLE_WORKFLOW_ID:0:5} \
                   --region us-east-1
 workflows:
   my_workflow:
