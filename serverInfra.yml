@@ -17,7 +17,7 @@ Resources:
       InstanceType: t3.micro
       ImageId: ami-08d4ac5b634553e16
       KeyName: ansible-key123
-      SecurityGroup: 
+      SecurityGroups: 
         - !Ref ServerSecurityGroup
       Tags:
         - Key: Name 
