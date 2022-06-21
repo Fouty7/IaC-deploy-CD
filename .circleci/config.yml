@@ -15,6 +15,6 @@ jobs:
                   --stack-name infra-stack-${CIRCLE_WORKFLOW_ID:0:5} \
                   --region us-east-1
 workflows:
-  my_workflow:
+  provision_server:
       jobs:
         - create_infrastructure                
