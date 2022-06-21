@@ -10,3 +10,7 @@ create_infrastructure:
                 --template-file serverInfra.yml \
                 --stack-name InfraDeployment-${CIRCLE_WORKFLOW_ID:0:5} \
                 --region us-east-1
+workflows:
+  my_workflow:
+      jobs:
+        - create_infrastructure                
