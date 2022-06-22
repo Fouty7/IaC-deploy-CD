@@ -22,20 +22,7 @@ jobs:
                   --template-file serverInfra.yml \
                   --stack-name infra-stack-${CIRCLE_WORKFLOW_ID:0:5} \
                   --region us-east-1
-  get_hostname:
-        docker:
-          - image: amazon/aws-cli
-        steps:
-          - checkout
-          - run:
-              name: Create Cloudformation Stack
-              command: |
-                aws ec2 describe-instances \
-                --query 'Reservations[*].Instances[*].PublicIpAddress' \
-                --output text >> inventory
-              when: on_fail
-                - destroy_environment         
-  configure_infrastructure: 
+#  configure_infrastructure: 
     docker:
       - image: python:3.7-alpine3.11
     steps:
@@ -50,12 +37,10 @@ jobs:
           name: Configure server
           command: |
             ansible-playbook -i inventory main-remote.yml
-  smoke_test:
+#  smoke_test:
     docker:
-#      - image: alpine:latest
-      - image: amazon/aws-cli
+    - image: alpine:latest
     steps:
-#      - run: apk add --update curl
       - run:
           name: simulate error
           command: |
@@ -65,12 +50,9 @@ workflows:
   configure_server:
       jobs:
         - create_infrastructure
-        - get_hostname:
+#        - configure_infrastructure:
             requires:
               - create_infrastructure
-        - configure_infrastructure:
-            requires:
-              - get_hostname
-        - smoke_test:
+#        - smoke_test:
             requires:
               - configure_infrastructure
