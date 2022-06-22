@@ -30,7 +30,7 @@ jobs:
           - run:
               name: Create Cloudformation Stack
               command: |
-                sudo aws ec2 describe-instances \
+                aws ec2 describe-instances \
                 --query 'Reservations[*].Instances[*].PublicIpAddress' \
                 --output text >> inventory             
   configure_infrastructure: 
