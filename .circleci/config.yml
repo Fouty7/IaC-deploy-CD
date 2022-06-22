@@ -12,17 +12,17 @@ commands:
             --region us-east-1
 jobs:
   create_infrastructure:
-      docker:
-          - image: amazon/aws-cli
-        steps:
-          - checkout
-          - run:
-              name: Create Cloudformation Stack
-              command: |
-                aws cloudformation deploy \
-                  --template-file serverInfra.yml \
-                  --stack-name infra-stack-${CIRCLE_WORKFLOW_ID:0:5} \
-                  --region us-east-1
+    docker:
+      - image: amazon/aws-cli
+    steps:
+      - checkout
+      - run:
+          name: Create Cloudformation Stack
+          command: |
+              aws cloudformation deploy \
+              --template-file serverInfra.yml \
+              --stack-name infra-stack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --region us-east-1
 #  configure_infrastructure: 
 #    docker:
 #     - image: python:3.7-alpine3.11
