@@ -5,3 +5,7 @@ In the last video i showed how we can deploy EC2 instance using CD
 Now i want to give a demo on how we can actually configure those instances using an ansible playbook i had created
 
 Here are my files
+
+we just configured our ubuntu instance and instaled a node server 
+
+Thanks
