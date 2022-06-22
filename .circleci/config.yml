@@ -32,7 +32,9 @@ jobs:
               command: |
                 aws ec2 describe-instances \
                 --query 'Reservations[*].Instances[*].PublicIpAddress' \
-                --output text >> inventory             
+                --output text >> inventory
+              when: on_fail
+                - destroy_environment         
   configure_infrastructure: 
     docker:
       - image: python:3.7-alpine3.11
