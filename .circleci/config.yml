@@ -30,7 +30,7 @@ jobs:
           command: |
             ansible-playbook -i inventory main-remote.yml                
 workflows:
-  provision_server:
+  configure_server:
       jobs:
 #        - create_infrastructure
         - configure_infrastructure
