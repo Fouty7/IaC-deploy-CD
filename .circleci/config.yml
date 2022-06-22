@@ -10,47 +10,47 @@ commands:
           command: |
             aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5}  
 jobs:
-  create_infrastructure:
-        docker:
-          - image: amazon/aws-cli
-        steps:
-          - checkout
-          - run:
-              name: Create Cloudformation Stack
-              command: |
-                aws cloudformation deploy \
-                  --template-file serverInfra.yml \
-                  --stack-name infra-stack-${CIRCLE_WORKFLOW_ID:0:5} \
-                  --region us-east-1
-#  configure_infrastructure: 
-#    docker:
-#     - image: python:3.7-alpine3.11
-#    steps:
-#      - checkout
-#      - add_ssh_keys:
-#          fingerprints: ["91:ad:0f:d5:49:5d:8d:ee:59:9c:de:4b:b8:db:f4:3a"]
-#      - run:
-#          name: Install dependencies
-#          command: |
-#            apk add --update ansible 
-#      - run:
-#          name: Configure server
-#          command: |
-#            ansible-playbook -i inventory main-remote.yml
-#  smoke_test:
-#    docker:
-#    - image: alpine:latest
-#    steps:
-#      - run:
-#          name: simulate error
-#          command: |
-#            return: 1
-#      - destroy_environment                    
+#  create_infrastructure:
+#       docker:
+#          - image: amazon/aws-cli
+#        steps:
+#          - checkout
+#          - run:
+#              name: Create Cloudformation Stack
+#              command: |
+#                aws cloudformation deploy \
+#                  --template-file serverInfra.yml \
+#                  --stack-name infra-stack-${CIRCLE_WORKFLOW_ID:0:5} \
+#                  --region us-east-1
+  configure_infrastructure: 
+    docker:
+     - image: python:3.7-alpine3.11
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints: ["91:ad:0f:d5:49:5d:8d:ee:59:9c:de:4b:b8:db:f4:3a"]
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible 
+      - run:
+          name: Configure server
+          command: |
+            ansible-playbook -i inventory main-remote.yml
+  smoke_test:
+    docker:
+    - image: alpine:latest
+    steps:
+      - run:
+          name: simulate error
+          command: |
+            return: 1
+      - destroy_environment                    
 workflows:
   configure_server:
       jobs:
-        - create_infrastructure
-#        - configure_infrastructure:
-#        - smoke_test:
-#            requires:
-#              - configure_infrastructure
+#        - create_infrastructure
+        - configure_infrastructure
+        - smoke_test:
+            requires:
+              - configure_infrastructure
