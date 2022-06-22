@@ -12,7 +12,7 @@ commands:
             --region us-east-1
 jobs:
   create_infrastructure:
-       docker:
+      docker:
           - image: amazon/aws-cli
         steps:
           - checkout
